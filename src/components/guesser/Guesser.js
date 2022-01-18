@@ -57,6 +57,7 @@ const Guesser = () => {
     if (won === true) {
       setColoring('green');
       setMessage(`${winningNum} was correct! You Won!!!`);
+      setGuess('');
     } else {
       setColoring('red');
       setMessage(

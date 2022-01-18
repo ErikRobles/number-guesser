@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CardStyle = styled.div`
-  width: 80%;
+  width: 90%;
   background-color: #fff;
   padding: 25px;
   display: flex;

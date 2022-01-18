@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container } from '../UI/Container';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
+import Button2 from '../UI/Button2';
 
 const Guesser = () => {
   let min = 1,
@@ -14,6 +15,7 @@ const Guesser = () => {
   const [winningNum, setWinningNum] = useState(
     Math.floor(Math.random() * (max - min + 1) + min)
   );
+  const [playAgain, setPlayAgain] = useState(false);
 
   console.log(winningNum);
   console.log(guess);
@@ -30,12 +32,15 @@ const Guesser = () => {
     } else if (value === winningNum) {
       // Game over - Won
       gameOver(true);
+      setPlayAgain(true);
     } else {
       // Wrong answer
       setGuessesLeft(guessesLeft - 1);
       if (guessesLeft === 0) {
         // Game Over - lost
         gameOver(false);
+        setPlayAgain(true);
+        setGuess('');
       } else {
         // Game Continues - answer wrong
         setColoring('red');
@@ -59,6 +64,15 @@ const Guesser = () => {
       );
     }
   };
+  const refreshPage = () => {
+    setColoring('#999');
+    setMessage('');
+    setGuess('');
+    setGuessesLeft(3);
+    setWinningNum(Math.floor(Math.random() * (max - min + 1) + min));
+    setPlayAgain(false);
+    setIsDisabled(false);
+  };
   return (
     <Container>
       <Card>
@@ -73,12 +87,19 @@ const Guesser = () => {
             id='guess-input'
             placeholder='Enter Your Guess...'
             onChange={(e) => setGuess(e.target.value)}
+            value={guess}
             disabled={isDisabled}
             style={{ borderColor: coloring }}
           />
           <Button id='guess-btn' guessNum={guessHandler}>
-            Submit
+            Guess
           </Button>
+          {playAgain && (
+            <Button2 id='guess-btn' guessAgain={refreshPage}>
+              Play Again
+            </Button2>
+          )}
+
           <p className='message' style={{ color: coloring }}>
             {message}
           </p>
